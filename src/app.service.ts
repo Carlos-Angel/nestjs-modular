@@ -7,10 +7,8 @@ import config from './config';
 export class AppService {
   constructor(
     @Inject(config.KEY) private configService: ConfigType<typeof config>,
-    @Inject('TASKS') private tasks: any[],
   ) {}
   getHello(): string {
-    // console.log('tasks:', this.tasks);
     return `api key: ${this.configService.apiKey}`;
   }
 }
