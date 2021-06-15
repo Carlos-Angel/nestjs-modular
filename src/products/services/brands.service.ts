@@ -13,40 +13,26 @@ export class BrandsService {
     return this.brandRepo.find();
   }
 
-  findOne(id: number) {
-    const brand = this.brandRepo.findOne(id);
+  async findOne(id: number) {
+    const brand = await this.brandRepo.findOne(id);
     if (!brand) {
       throw new NotFoundException(`Brand #${id} not found`);
     }
     return brand;
   }
 
-  // create(data: CreateBrandDto) {
-  //   this.counterId = this.counterId + 1;
-  //   const newBrand = {
-  //     id: this.counterId,
-  //     ...data,
-  //   };
-  //   this.brands.push(newBrand);
-  //   return newBrand;
-  // }
+  create(data: CreateBrandDto) {
+    const newBrand = this.brandRepo.create(data);
+    return this.brandRepo.save(newBrand);
+  }
 
-  // update(id: number, changes: UpdateBrandDto) {
-  //   const brand = this.findOne(id);
-  //   const index = this.brands.findIndex((item) => item.id === id);
-  //   this.brands[index] = {
-  //     ...brand,
-  //     ...changes,
-  //   };
-  //   return this.brands[index];
-  // }
+  async update(id: number, changes: UpdateBrandDto) {
+    const brand = await this.brandRepo.findOne(id);
+    this.brandRepo.merge(brand, changes);
+    return this.brandRepo.save(brand);
+  }
 
-  // remove(id: number) {
-  //   const index = this.brands.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     throw new NotFoundException(`Brand #${id} not found`);
-  //   }
-  //   this.brands.splice(index, 1);
-  //   return true;
-  // }
+  remove(id: number) {
+    return this.brandRepo.delete(id);
+  }
 }
