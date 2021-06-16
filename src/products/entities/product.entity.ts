@@ -4,12 +4,18 @@ import {
   Entity,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+
+import { Brand } from './brand.entity';
 
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  brand: Brand;
 
   @Column({ type: 'varchar', length: 255, unique: true })
   name: string;
