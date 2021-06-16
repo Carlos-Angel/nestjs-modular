@@ -4,14 +4,14 @@ import { Repository } from 'typeorm';
 
 import { Product } from './../entities/product.entity';
 import { Category } from './../entities/category.entity';
-import { BrandsService } from './brands.service';
+import { Brand } from './../entities/brand.entity';
 import { CreateProductDto, UpdateProductDto } from '../dtos/products.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private productRepo: Repository<Product>,
-    private brandService: BrandsService,
+    @InjectRepository(Brand) private brandRepo: Repository<Brand>,
     @InjectRepository(Category) private categoryRepo: Repository<Category>,
   ) {}
 
@@ -32,7 +32,7 @@ export class ProductsService {
   async create(data: CreateProductDto) {
     const newProduct = this.productRepo.create(data);
     if (data.brandId) {
-      const brand = await this.brandService.findOne(data.brandId);
+      const brand = await this.brandRepo.findOne(data.brandId);
       newProduct.brand = brand;
     }
     if (data.categoriesIds) {
@@ -45,7 +45,7 @@ export class ProductsService {
   async update(id: number, changes: UpdateProductDto) {
     const product = await this.productRepo.findOne(id);
     if (changes.brandId) {
-      const brand = await this.brandService.findOne(changes.brandId);
+      const brand = await this.brandRepo.findOne(changes.brandId);
       product.brand = brand;
     }
     this.productRepo.merge(product, changes);
