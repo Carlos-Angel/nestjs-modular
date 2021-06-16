@@ -19,3 +19,23 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - '5050:80'
+
+  mysql:
+    image: mysql:5
+    environment:
+      - MYSQL_DATABASE=platzi_store
+      - MYSQL_ROOT_PASSWORD=1234567890
+    ports:
+      - '3001:3306'
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234567890
+      - PMA_HOST=mysql
+    ports:
+      - '8080:80'
+    depends_on:
+      - mysql

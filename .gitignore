@@ -38,3 +38,6 @@ lerna-debug.log*
 
 #postgres
 /postgres_data
+
+#mysql
+/mysql_data
