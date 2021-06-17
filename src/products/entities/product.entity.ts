@@ -8,18 +8,20 @@ import {
   ManyToMany,
   JoinTable,
   Index,
+  JoinColumn,
 } from 'typeorm';
 
 import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 
-@Entity()
+@Entity({ name: 'products' })
 @Index(['price', 'stock', 'name'])
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Brand, (brand) => brand.products)
+  @JoinColumn({ name: 'brand_id' })
   brand: Brand;
 
   @Column({ type: 'varchar', length: 255, unique: true })
@@ -38,18 +40,28 @@ export class Product {
   image: string;
 
   @CreateDateColumn({
+    name: 'created_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAtt: Date;
 
   @UpdateDateColumn({
+    name: 'updated_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   updatedAtt: Date;
 
   @ManyToMany(() => Category, (category) => category.products)
-  @JoinTable()
+  @JoinTable({
+    name: 'products_has_categories',
+    joinColumn: {
+      name: 'product_id',
+    },
+    inverseJoinColumn: {
+      name: 'category_id',
+    },
+  })
   categories: Category[];
 }

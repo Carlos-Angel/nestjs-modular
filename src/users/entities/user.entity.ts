@@ -10,13 +10,13 @@ import {
 
 import { Customer } from './customer.entity';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
   @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
   @Column({ type: 'varchar', length: 255, unique: true })
@@ -29,12 +29,14 @@ export class User {
   role: string;
 
   @CreateDateColumn({
+    name: 'created_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAtt: Date;
 
   @UpdateDateColumn({
+    name: 'updated_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })

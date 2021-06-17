@@ -5,23 +5,26 @@ import {
   UpdateDateColumn,
   Column,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { Product } from '../../products/entities/product.entity';
 import { Order } from './order.entity';
 
-@Entity()
+@Entity({ name: 'orders_has_items' })
 export class OrderItem {
   @PrimaryGeneratedColumn()
   id: number;
 
   @CreateDateColumn({
+    name: 'created_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAtt: Date;
 
   @UpdateDateColumn({
+    name: 'updated_att',
     type: 'timestamptz',
     default: () => 'CURRENT_TIMESTAMP',
   })
@@ -31,8 +34,10 @@ export class OrderItem {
   quantity: number;
 
   @ManyToOne(() => Product)
+  @JoinColumn({ name: 'product_id' })
   product: Product;
 
   @ManyToOne(() => Order, (order) => order.items)
+  @JoinColumn({ name: 'order_id' })
   order: Order;
 }
