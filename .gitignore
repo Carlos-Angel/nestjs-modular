@@ -34,3 +34,9 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 *.env
+
+# mongo
+mongo_data
+
+# docker
+docker-compose.yml
