@@ -9,6 +9,7 @@ import { Brand, BrandSchema } from './entities/brand.entity';
 import { BrandsService } from './services/brands.service';
 import { BrandsController } from './controllers/brands.controller';
 
+import { Category, CategorySchema } from './entities/category.entity';
 import { CategoriesService } from './services/categories.service';
 import { CategoriesController } from './controllers/categories.controller';
 
@@ -22,6 +23,10 @@ import { CategoriesController } from './controllers/categories.controller';
       {
         name: Brand.name,
         schema: BrandSchema,
+      },
+      {
+        name: Category.name,
+        schema: CategorySchema,
       },
     ]),
   ],

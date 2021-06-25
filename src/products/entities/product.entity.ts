@@ -21,7 +21,6 @@ export class Product extends Document {
   @Prop(
     raw({
       name: { type: String },
-      image: { type: String },
     }),
   )
   category: Record<string, any>;
