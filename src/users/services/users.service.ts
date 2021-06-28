@@ -6,6 +6,7 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
 
 import { ProductsService } from './../../products/services/products.service';
+import { hashPassword } from '../../utils/handler-bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -26,9 +27,16 @@ export class UsersService {
     return user;
   }
 
-  create(data: CreateUserDto) {
+  async create(data: CreateUserDto) {
     const newUser = new this.userModel(data);
-    return newUser.save();
+    newUser.password = await hashPassword(newUser.password);
+    const model = await newUser.save();
+    const { password, ...rta } = model.toJSON();
+    return rta;
+  }
+
+  async findByEmail(email) {
+    return await this.userModel.findOne({ email }).exec();
   }
 
   async update(id: string, changes: UpdateUserDto) {
