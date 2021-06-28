@@ -36,5 +36,9 @@ lerna-debug.log*
 # env
 *.env
 
-#postgres
+# docker
+docker-compose.yml
+
+# volumes docker
 /postgres_data
+/mongo_data
