@@ -8,7 +8,7 @@ import { CreateCategoryDto, UpdateCategoryDto } from '../dtos/category.dtos';
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectModel(Category.name) private categoryModel: Model<typeof Category>,
+    @InjectModel(Category.name) private categoryModel: Model<Category>,
   ) {}
 
   findAll() {

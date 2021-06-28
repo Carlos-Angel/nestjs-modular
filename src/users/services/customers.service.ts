@@ -8,7 +8,7 @@ import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
 @Injectable()
 export class CustomersService {
   constructor(
-    @InjectModel(Customer.name) private customerModel: Model<typeof Customer>,
+    @InjectModel(Customer.name) private customerModel: Model<Customer>,
   ) {}
   async findAll() {
     return await this.customerModel.find().exec();

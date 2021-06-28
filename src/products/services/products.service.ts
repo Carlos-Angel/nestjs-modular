@@ -12,7 +12,7 @@ import {
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectModel(Product.name) private productModel: Model<typeof Product>,
+    @InjectModel(Product.name) private productModel: Model<Product>,
   ) {}
 
   findAll(params?: FilterProductDto) {

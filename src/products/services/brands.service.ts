@@ -7,9 +7,7 @@ import { CreateBrandDto, UpdateBrandDto } from '../dtos/brand.dtos';
 
 @Injectable()
 export class BrandsService {
-  constructor(
-    @InjectModel(Brand.name) private brandModel: Model<typeof Brand>,
-  ) {}
+  constructor(@InjectModel(Brand.name) private brandModel: Model<Brand>) {}
 
   findAll() {
     return this.brandModel.find().exec();
