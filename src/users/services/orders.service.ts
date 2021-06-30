@@ -48,4 +48,13 @@ export class OrdersService {
   remove(id: number) {
     return this.orderRepo.delete(id);
   }
+
+  async ordersByCustomer(customerId: number) {
+    return await this.orderRepo.find({
+      relations: ['customer'],
+      where: {
+        customer: customerId,
+      },
+    });
+  }
 }
